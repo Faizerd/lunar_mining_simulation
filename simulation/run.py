@@ -83,7 +83,7 @@ class LunarMiningSimulation:
         for truck in self.trucks:
             print(f"Truck {truck.truck_id}: {truck.num_batches_delivered} loads delivered, {truck.total_queued_time} minutes spent queued for an unload station")
         for station in self.stations:
-            print(f"Station {station.station_id}: {station.num_trucks_unloaded} loads recieved, average queue length {station.get_average_queue_length()}")
+            print(f"Station {station.station_id}: {station.num_trucks_unloaded} loads recieved, average queue length {'%.2f' % station.get_average_queue_length()}")
 
 
 def main():
