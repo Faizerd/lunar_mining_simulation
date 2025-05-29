@@ -86,5 +86,10 @@ lunar_mining_simulation/
 - Python 3.7+
 - pytest (for running tests)
 
+## Testing
+To run tests, if pytest is setup correctly, you should be able to just run `pytest`
+
+To see test coverage, run `pytest --cov simulation --cov-report term-missing`
+
 ## Followup
 If the cost of operating a station and truck was known, and the profit per load of helium was known, this could be used to run many simulations and determine the optimal number of stations and trucks to maximize profits.

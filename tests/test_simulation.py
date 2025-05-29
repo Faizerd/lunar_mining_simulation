@@ -55,7 +55,7 @@ class TestLunarMiningSimulation:
         sim = LunarMiningSimulation(2, 3)
         
         # Initially all queues are empty, so first station should be returned
-        station = sim.get_station_id_shortest_queue()
+        station = sim.get_station_shortest_queue()
         assert station.station_id == 0
         
         # Add trucks to station queues
@@ -64,7 +64,7 @@ class TestLunarMiningSimulation:
         sim.stations[1].truck_queue.append(0)  # Add another truck to station 1
         
         # Station 2 should now have the shortest queue (empty)
-        station = sim.get_station_id_shortest_queue()
+        station = sim.get_station_shortest_queue()
         assert station.station_id == 2
         
         # Add trucks to all stations
@@ -72,7 +72,7 @@ class TestLunarMiningSimulation:
         
         # Station 0 and 2 now have 1 truck each, station 1 has 2 trucks
         # Station 0 should be returned as it's checked first when equal length
-        station = sim.get_station_id_shortest_queue()
+        station = sim.get_station_shortest_queue()
         assert station.station_id == 0
 
     def test_assign_truck_to_station(self):

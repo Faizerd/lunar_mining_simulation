@@ -30,7 +30,7 @@ class LunarMiningSimulation:
         for i in range(self.num_stations):
             self.stations.append(MiningUnloadStation(i))
 
-    def get_station_id_shortest_queue(self) -> MiningUnloadStation:
+    def get_station_shortest_queue(self) -> MiningUnloadStation:
         """
         Find the station with the shortest queue.
 
@@ -41,22 +41,22 @@ class LunarMiningSimulation:
         for station in self.stations:
             if station.get_queue_length() < shortest_queue_station.get_queue_length():
                 shortest_queue_station = station
-        return shortest_queue_station.station_id
+        return shortest_queue_station
 
-    def assign_truck_to_station(self, truck_id: int):
+    def assign_truck_to_station(self, truck: MiningTruck):
         """
         Assign the given truck to the station with the shortest queue.
         If it is at the front of the newly joined queue, start unloading.
 
         Args:
-            truck_id: Mining Truck ID to assign to a station
+            truck: Mining Truck to assign to a station
         """
-        station_id = self.get_station_id_shortest_queue()
-        self.trucks[truck_id].station_id = station_id
-        self.stations[station_id].truck_queue.append(truck_id)
+        station = self.get_station_shortest_queue()
+        truck.station_id = station.station_id
+        station.truck_queue.append(truck.truck_id)
         # If the truck just joined an empty queue, it should start unloading
-        if self.stations[station_id].get_queue_length() == 1:
-            self.trucks[truck_id].state = TruckState.UNLOADING
+        if station.get_queue_length() == 1:
+            truck.state = TruckState.UNLOADING
 
 
     def run(self):
@@ -70,7 +70,7 @@ class LunarMiningSimulation:
                 truck.tick()
                 # If a truck is ready to unload, assign it to the station with the smallest queue
                 if truck.needs_unload_station():
-                    self.assign_truck_to_station(truck.truck_id)
+                    self.assign_truck_to_station(truck)
             
             for station in self.stations:
                 # For each station, check if the line has moved
